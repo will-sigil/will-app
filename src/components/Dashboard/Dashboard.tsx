@@ -23,23 +23,21 @@ export const Dashboard : React.FC<DashboardProps> = ( ) => {
                 const querySnapshot = await getDocs(collection(firestore, 'hockey'));
                 const newData: StandingsCollection[] = [];
                 querySnapshot.forEach((doc) => {
-                    // Add each document's data to newData array
                     newData.push({ ...doc.data() as StandingsCollection });
                 });
                 setData(newData);
             } catch(err) {
                 console.log(err)
             } finally {
-                setLoading(false); // Set loading to false regardless of success or failure
+                setLoading(false);
             }
         }
         fetchData();
     }, [setData])
-    console.log(`DASHBOARD: ${data}`);
     return (
         <Box>
             <Header />
-            {loading ? ( // Display loading indicator if data is being fetched
+            {loading ? ( 
                 <CircularProgress />
             ) : (
                 <Standings standings={data[0] } />

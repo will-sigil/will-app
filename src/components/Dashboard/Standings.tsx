@@ -8,7 +8,6 @@ type StandingsProps = {
 }
 
 export const Standings: React.FC<StandingsProps> = ({ standings }) => {
-    console.log(`STANDINGS: ${standings}`)
     const { league, conferences } = standings;
     const divs = popDivs(conferences);
     const teams = popTeams(divs);
@@ -40,22 +39,11 @@ export const Standings: React.FC<StandingsProps> = ({ standings }) => {
         { field: 'col4', headerName: 'Clinched', width: 150 },
     ]
     return (
-        <Box>
-            <Typography variant='h4'>{league.alias}</Typography>
-            {
-                conferences.map((conf) => {
-                    return (
-                        <Container>
-                            <Typography variant='h6'>{conf.alias}</Typography>
-                            {
-                                conf.divisions.map((_conf, index) => {
-                                    return (<DataGrid key={index} hideFooter  rows={rows} columns={cols}></DataGrid>)
-                                })
-                            }
-                        </Container>
-                    )
-                })
-            }
+        <Box>    
+            <Container>
+                <Typography sx={{mt: 6}} variant='h4'>{league.alias}</Typography>
+                <DataGrid sx={{mt: 4}} hideFooter  rows={rows} columns={cols}></DataGrid>
+            </Container>
         </Box>
     )
 }
