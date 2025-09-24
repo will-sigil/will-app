@@ -1,23 +1,34 @@
-import { ReactNode, useContext } from "react";
+// src/Auth/PrivateRoute/PrivateRoute.tsx
+import * as React from "react";
+import { useContext } from "react";
+import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
-import { Navigate } from "react-router-dom";
+import { CircularProgress, Box } from "@mui/material";
 
-type PrivateRouteType = {
-    children: ReactNode
-}
-export const PrivateRoute: React.FC<PrivateRouteType> = ({ children }) => {
-    const authContext = useContext(AuthContext);
+type Props = { children: React.ReactElement };
 
-    if (authContext === null) {
-        return <Navigate to="/" />;
-    }
-    const { loading, user } = authContext!;
+export const PrivateRoute: React.FC<Props> = ({ children }) => {
+  const auth = useContext(AuthContext);
+  const location = useLocation();
 
-    if (loading) {
-        return <span className="loading loading-dots loading-lg"></span>;
-    }
+  if (!auth) {
+    return <Navigate to={`/signin`} replace />;
+  }
 
-    if (user) {
-        return children;
-    }
+  const { user, loading } = auth;
+
+  if (loading) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 8 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (!user) {
+    const next = encodeURIComponent(location.pathname + location.search);
+    return <Navigate to={`/signin?next=${next}`} replace />;
+  }
+
+  return children;
 };

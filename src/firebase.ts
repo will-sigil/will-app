@@ -1,12 +1,8 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getRemoteConfig } from "firebase/remote-config";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDltt5bqIU-xtFFwrOsEy7XnoxS1T5F0JA",
   authDomain: "will-training-app.firebaseapp.com",
@@ -14,10 +10,9 @@ const firebaseConfig = {
   projectId: "will-training-app",
   storageBucket: "will-training-app.appspot.com",
   messagingSenderId: "277982002270",
-  appId: "1:277982002270:web:d4eba9e6e5722a65cc88cf"
+  appId: "1:277982002270:web:d4eba9e6e5722a65cc88cf",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
@@ -26,7 +21,7 @@ const firestore = getFirestore(app);
 const remoteConfig = getRemoteConfig(app);
 remoteConfig.settings.minimumFetchIntervalMillis = 10;
 remoteConfig.defaultConfig = {
-  "test": "blue"
+  test: "blue",
 };
 
 export { auth, firestore, remoteConfig };
